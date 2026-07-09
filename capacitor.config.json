@@ -1,0 +1,9 @@
+{
+  "appId": "com.learnenglish.malayalamhub",
+  "appName": "English Malayalam Learning Hub",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

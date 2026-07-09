@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>English Malayalam Learning Hub</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="All-in-one English learning platform for Malayalam speakers. Learn grammar, translate Manglish, practice speaking, and play educational games.">
+  <meta name="theme-color" content="#6366f1">
+  
+  <!-- Web Manifest & PWA Meta -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+  
+  <!-- Premium Font Awesome Icons & Custom Stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Mobile Header -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--surface-glass); backdrop-filter: blur(12px); border-bottom: 1px solid var(--surface-border); display: none; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 150;" id="mobile-top-bar">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="brand-logo" style="width:32px; height:32px; font-size:1rem;">E</div>
+        <span style="font-weight: 700; font-size: 0.95rem;">EM Learning Hub</span>
+      </div>
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <script>
+      if (window.innerWidth <= 1024) {
+        document.getElementById('mobile-top-bar').style.display = 'flex';
+      }
+    </script>
+
+    <!-- Sidebar Navigation Menu -->
+    <aside class="sidebar" id="sidebar-menu">
+      <div class="brand">
+        <div class="brand-logo">E</div>
+        <div class="brand-name">
+          EM Learning<br><span style="font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);">Malayalam Hub</span>
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <li class="nav-item active"><a href="#dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+        <li class="nav-item"><a href="#translator"><i class="fas fa-language"></i> Translator</a></li>
+        <li class="nav-item"><a href="#grammar"><i class="fas fa-book-open"></i> Grammar Course</a></li>
+        <li class="nav-item"><a href="#vocabulary"><i class="fas fa-spell-check"></i> Vocabulary Hub</a></li>
+        <li class="nav-item"><a href="#speaking"><i class="fas fa-comment-dots"></i> Speaking Partner</a></li>
+        <li class="nav-item"><a href="#corrector"><i class="fas fa-spell-check"></i> Grammar Corrector</a></li>
+        <li class="nav-item"><a href="#writing"><i class="fas fa-edit"></i> Writing Room</a></li>
+        <li class="nav-item"><a href="#games"><i class="fas fa-gamepad"></i> Games Deck</a></li>
+        <li class="nav-item"><a href="#ai-teacher"><i class="fas fa-graduation-cap"></i> AI Teacher</a></li>
+        <li class="nav-item"><a href="#admin"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
+      </nav>
+
+      <div class="nav-footer">
+        <div class="user-profile-widget">
+          <div class="user-avatar" id="user-widget-avatar">G</div>
+          <div class="user-info">
+            <span class="user-name" id="user-widget-name">Guest Learner</span>
+            <span class="user-level" id="user-widget-level">Level 1</span>
+          </div>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle-btn">
+          <i class="fas fa-moon"></i> Dark Mode
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top header bar containing stats -->
+      <header class="top-header">
+        <div class="header-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search lessons, vocabulary, idioms..." id="global-search-input">
+        </div>
+        <div class="header-actions">
+          <div class="streak-counter" title="Daily Streak">
+            <i class="fas fa-fire"></i> <span id="header-streak-count">1</span> Days
+          </div>
+          <div class="xp-badge" title="Total Experience Points">
+            <i class="fas fa-star"></i> <span id="header-xp-count">0 XP</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==========================================================================
+           SECTION 1: DASHBOARD VIEW
+           ========================================================================== -->
+      <section class="app-section active" id="dashboard-section">
+        <div class="glass-panel" style="background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.05) 100%);">
+          <h1 style="font-weight: 800; font-size: 2.2rem; letter-spacing: -1px;">Welcome back, <span class="text-gradient">Learner!</span></h1>
+          <p style="color: var(--text-secondary); margin-top: 8px;">Let's continue mastering English grammar and vocabulary today. (ഇന്ന് തന്നെ നിങ്ങളുടെ പഠനം തുടരൂ!)</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card streak">
+            <div class="stat-icon"><i class="fas fa-fire"></i></div>
+            <div class="stat-details">
+              <h3>Streak</h3>
+              <div class="stat-number" id="dash-streak">1</div>
+            </div>
+          </div>
+          <div class="stat-card xp">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-details">
+              <h3>Total XP</h3>
+              <div class="stat-number" id="dash-xp">0</div>
+            </div>
+          </div>
+          <div class="stat-card lessons">
+            <div class="stat-icon"><i class="fas fa-check-double"></i></div>
+            <div class="stat-details">
+              <h3>Lessons Done</h3>
+              <div class="stat-number" id="dash-lessons">0</div>
+            </div>
+          </div>
+          <div class="stat-card games">
+            <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
+            <div class="stat-details">
+              <h3>Games Completed</h3>
+              <div class="stat-number" id="dash-games">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-layout">
+          <!-- Weekly Analytics SVG Chart -->
+          <div class="glass-panel">
+            <h3 style="font-weight: 700; margin-bottom: 16px;">Weekly Progress Chart</h3>
+            <div style="height: 160px; width: 100%;" id="progress-chart">
+              <!-- Inline SVG graph injected by dashboard.js -->
+            </div>
+            
+            <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; border-top: 1px solid var(--surface-border); padding-top: 20px;">
+              <div>
+                <span style="font-size: 0.8rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Grammar Rank</span>
+                <div style="height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                  <div style="width:0%; height:100%; background:var(--primary); transition: width var(--transition-slow);" id="progress-bar-grammar"></div>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.8rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Vocab Rank</span>
+                <div style="height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                  <div style="width:0%; height:100%; background:var(--secondary); transition: width var(--transition-slow);" id="progress-bar-vocab"></div>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.8rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Speaking Rank</span>
+                <div style="height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;">
+                  <div style="width:0%; height:100%; background:var(--accent); transition: width var(--transition-slow);" id="progress-bar-speaking"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Challenge & Quick facts widget -->
+          <div class="glass-panel" style="display:flex; flex-direction:column; gap: 20px;">
+            <h3 style="font-weight:700;">Word of the Day (ഇന്നത്തെ വാക്ക്)</h3>
+            <div class="glass-card" style="border-left:4px solid var(--primary); padding: 16px;">
+              <h4 style="font-size: 1.25rem; font-weight:700; color:var(--primary);" id="word-day-title">Persist</h4>
+              <p class="malayalam-font" style="font-size: 0.95rem; font-weight: 500; color: var(--text-primary); margin-top: 4px;" id="word-day-meaning">സ്ഥിരമായി തുടരുക</p>
+              <p style="font-size:0.85rem; font-style:italic; color:var(--text-secondary); margin-top: 8px;" id="word-day-sentence">"You must persist in your studies."</p>
+            </div>
+
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Quick Study references</h4>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
+                  <span>Idiom of the day: <strong id="idiom-day-phrase">Piece of cake</strong></span>
+                  <span style="color:var(--text-secondary);" id="idiom-day-meaning">വളരെ എളുപ്പം</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
+                  <span>Phrasal verb: <strong id="phrasal-day-phrase">Call off</strong></span>
+                  <span style="color:var(--text-secondary);" id="phrasal-day-meaning">റദ്ദാക്കുക</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badges roadmap -->
+        <div class="glass-panel">
+          <h3 style="font-weight: 700;">Digital Achievements (നേട്ടങ്ങൾ)</h3>
+          <div class="badges-container" id="dashboard-badges">
+            <!-- Rendered by js/dashboard.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 2: TRANSLATOR VIEW
+           ========================================================================== -->
+      <section class="app-section" id="translator-section">
+        <div class="glass-panel">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h2 style="font-weight: 800;">English-Malayalam Translator</h2>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Accurate client-side text translation and Manglish speech transliteration.</p>
+            </div>
+            <!-- Manglish convert checkbox -->
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer;">
+              <input type="checkbox" id="translator-manglish-checkbox" style="width:16px; height:16px;">
+              <span>Manglish Mode</span>
+            </label>
+          </div>
+
+          <div class="translator-grid">
+            <!-- Source input panel -->
+            <div class="translator-box">
+              <div class="translator-header">
+                <span class="lang-select" id="translator-src-label">English</span>
+                <button class="action-btn" id="translator-speak-input" title="Pronounce Input"><i class="fas fa-volume-up"></i></button>
+              </div>
+              <textarea class="translation-textarea" placeholder="Type here (e.g. Enikku vishakkunnu, Hello, How are you)..." id="translator-input"></textarea>
+              <div class="box-actions">
+                <button class="btn btn-primary" id="translator-submit-btn" style="flex:1;">Translate</button>
+              </div>
+            </div>
+
+            <!-- Swap button center absolute on desktop, stack on mobile -->
+            <button class="trans-swap-btn" id="translator-swap-btn"><i class="fas fa-exchange-alt"></i></button>
+
+            <!-- Target output panel -->
+            <div class="translator-box">
+              <div class="translator-header">
+                <span class="lang-select" id="translator-targ-label">Malayalam</span>
+                <button class="action-btn" id="translator-speak-output" title="Pronounce Output"><i class="fas fa-volume-up"></i></button>
+              </div>
+              <div class="translation-output" id="translator-output">Translation output will appear here...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 3: GRAMMAR COURSE VIEW
+           ========================================================================== -->
+      <section class="app-section" id="grammar-section">
+        <div class="grammar-grid">
+          <!-- Left lesson sidebar selection list -->
+          <div class="glass-panel" style="padding: 20px;">
+            <h3 style="font-weight: 700; margin-bottom: 16px;">Course Syllabus</h3>
+            <div class="lesson-list" id="grammar-lessons-list">
+              <!-- Rendered by js/grammar.js -->
+            </div>
+          </div>
+
+          <!-- Right lesson details reader -->
+          <div class="lesson-viewer">
+            <div class="lesson-viewer-body">
+              <div class="lesson-header">
+                <h2 id="lesson-title" style="font-weight: 800;">Lesson Title</h2>
+              </div>
+              
+              <div class="lesson-section-block">
+                <h3>മലയാളം വിശദീകരണം</h3>
+                <p class="malayalam-font" id="lesson-desc-malayalam" style="font-size: 1.05rem; color: var(--text-primary);">Malayalam explanation...</p>
+              </div>
+
+              <div class="lesson-section-block">
+                <h3>English Explanation</h3>
+                <p id="lesson-desc-english" style="font-size: 1rem; color: var(--text-secondary); line-height:1.6;">English rules...</p>
+              </div>
+
+              <div class="lesson-section-block">
+                <h3>Examples (ഉദാഹരണങ്ങൾ)</h3>
+                <div id="lesson-examples-list" style="display:flex; flex-direction:column; gap:12px;">
+                  <!-- Examples -->
+                </div>
+              </div>
+
+              <!-- Interactive Exercise Quiz Block -->
+              <div class="lesson-quiz-box" id="lesson-quiz-container">
+                <!-- Injected quiz panel -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 4: VOCABULARY VIEW
+           ========================================================================== -->
+      <section class="app-section" id="vocabulary-section">
+        <div class="glass-panel vocab-deck">
+          <div style="text-align: center; max-width:600px;">
+            <h2 style="font-weight: 800;">Daily Vocabulary Lab</h2>
+            <p style="color: var(--text-secondary); margin-top: 6px;">Master 100 essential English words. Flip cards to see meanings and synonyms.</p>
+          </div>
+
+          <!-- Search filter input -->
+          <div style="max-width: 400px; width:100%; position:relative;">
+            <i class="fas fa-search" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
+            <input type="text" placeholder="Search vocabulary word..." id="vocab-search-input" class="form-input" style="padding-left:48px;">
+          </div>
+
+          <!-- Category filter chips -->
+          <div class="vocab-filters" id="vocab-categories">
+            <!-- Chips list -->
+          </div>
+
+          <!-- 3D Flipping Word Card -->
+          <div class="word-card-container" id="vocab-card-container">
+            <div class="word-card-inner">
+              <div class="word-card-front" id="vocab-card-front">
+                <!-- Front contents -->
+              </div>
+              <div class="word-card-back" id="vocab-card-back">
+                <!-- Back contents -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Controls -->
+          <div class="card-controls">
+            <button class="action-btn" id="vocab-prev-btn"><i class="fas fa-arrow-left"></i></button>
+            <button class="action-btn" id="vocab-speak-btn" style="width: 50px; height:50px; font-size:1.25rem;"><i class="fas fa-volume-up"></i></button>
+            <button class="action-btn" id="vocab-favorite-btn"><i class="far fa-heart"></i></button>
+            <button class="action-btn" id="vocab-next-btn"><i class="fas fa-arrow-right"></i></button>
+          </div>
+          <span style="font-size:0.85rem; color:var(--text-muted);" id="vocab-index-info">1 / 10</span>
+
+          <!-- Grid of all words -->
+          <div style="width:100%; border-top: 1px solid var(--surface-border); padding-top:30px; margin-top:20px;">
+            <h3 style="font-weight:700; margin-bottom:20px;">All Vocabulary Words</h3>
+            <div id="vocab-all-words-list">
+              <!-- Rendered list items -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 5: SPEAKING VIEW
+           ========================================================================== -->
+      <section class="app-section" id="speaking-section">
+        <div class="speaking-workspace">
+          <!-- Left Scenario List -->
+          <div class="glass-panel" style="padding:20px;">
+            <h3 style="font-weight:700; margin-bottom:16px;">Practice Scenarios</h3>
+            <div class="lesson-list" id="speaking-scenarios-list">
+              <!-- Injected scenarios list -->
+            </div>
+          </div>
+
+          <!-- Right Conversation window and stats evaluation -->
+          <div class="glass-panel" style="display:flex; flex-direction:column; gap:20px; padding:20px;">
+            <div class="chat-window">
+              <div class="chat-header">
+                <div class="bot-avatar"><i class="fas fa-robot"></i></div>
+                <div>
+                  <h4 style="font-weight:700; font-size:0.95rem;" id="speaking-scenario-title">AI Speaking Partner</h4>
+                  <span style="font-size:0.75rem; color:var(--accent);">Online / active</span>
+                </div>
+              </div>
+              
+              <div class="chat-history" id="speaking-chat-history">
+                <!-- Chat bubbles -->
+              </div>
+              
+              <div class="chat-input-area">
+                <!-- Microphone trigger -->
+                <button class="voice-mic-btn" id="speak-mic-btn"><i class="fas fa-microphone"></i></button>
+                <div style="flex:1; font-size:0.9rem; color:var(--text-secondary);">
+                  Tap mic and speak, or pick suggestions below:
+                </div>
+                <button class="btn btn-secondary" id="speak-reset-btn" style="padding: 10px 16px; font-size:0.8rem;">Reset</button>
+              </div>
+            </div>
+
+            <!-- Dynamic suggested reply options -->
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Suggested Responses</span>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;" id="speaking-suggestions">
+                <!-- Suggestions -->
+              </div>
+            </div>
+
+            <!-- Evaluation Stats dial overlay -->
+            <div class="glass-card pronounce-stats">
+              <h4 style="font-weight:700; margin-bottom:10px;">Speech & Pronunciation Analytics</h4>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:center;">
+                <div class="score-dial-container">
+                  <!-- Circular progress dial -->
+                  <div class="score-dial" id="speaking-accuracy-dial" style="--score-pct: 0;">0%</div>
+                </div>
+                <div>
+                  <div style="margin-bottom:8px;">
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Word count:</span>
+                    <strong style="display:block; font-size:1.1rem;" id="speaking-word-count">0 words</strong>
+                  </div>
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Tutor comments:</span>
+                    <strong style="display:block; font-size:0.9rem; color:var(--text-primary);" id="speaking-text-feedback">Start speaking to evaluate.</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 6: GRAMMAR CORRECTOR VIEW
+           ========================================================================== -->
+      <section class="app-section" id="corrector-section">
+        <div class="glass-panel">
+          <h2 style="font-weight: 800; margin-bottom: 8px;">Grammar Check & Corrector</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Enter any English sentence. We'll identify errors and explain why they are wrong in Malayalam.</p>
+          
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <textarea id="corrector-input" class="form-input" style="height:120px;" placeholder="Enter wrong sentence (e.g. I going office yesterday)..."></textarea>
+            <button class="btn btn-primary" id="corrector-check-btn" style="align-self: flex-start;">Check Sentence</button>
+          </div>
+
+          <div id="corrector-results" style="margin-top: 30px;">
+            <!-- Output response -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 7: WRITING ROOM VIEW
+           ========================================================================== -->
+      <section class="app-section" id="writing-section">
+        <div class="speaking-workspace">
+          <!-- Template selector -->
+          <div class="glass-panel" style="padding: 20px;">
+            <h3 style="font-weight:700; margin-bottom:16px;">Writing Templates</h3>
+            <div class="lesson-list" id="writing-templates-list">
+              <!-- Templates -->
+            </div>
+          </div>
+
+          <!-- Template editor and guidelines -->
+          <div class="glass-panel" style="display:flex; flex-direction:column; gap:20px; padding: 20px;">
+            <h3 style="font-weight:700;">Document Editor</h3>
+            <textarea id="writing-editor" class="form-input" style="height: 250px; font-family: monospace; font-size:0.95rem; line-height:1.6; background:rgba(0,0,0,0.3);"></textarea>
+            
+            <div class="glass-card" style="padding:16px;">
+              <h4 style="font-weight:700; font-size:0.9rem; margin-bottom:8px; color:var(--primary);">Writing Guidelines</h4>
+              <ul id="writing-template-guidelines" style="list-style-type: disc; padding-left:10px;">
+                <!-- Suggestions guidelines list -->
+              </ul>
+            </div>
+
+            <button class="btn btn-primary" id="writing-analyze-btn" style="align-self:flex-start;">Analyze Draft</button>
+
+            <!-- Feedback output panel -->
+            <div class="glass-card" id="writing-feedback-panel" style="padding:16px;">
+              <!-- Analysis feedback content -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 8: GAMES DECK VIEW
+           ========================================================================== -->
+      <section class="app-section" id="games-section">
+        <!-- Dashboard list of games -->
+        <div class="games-deck" id="games-deck-container">
+          <!-- Games cards list dynamically loaded -->
+        </div>
+
+        <!-- Single Game Interactive playground screen -->
+        <div class="game-playground" id="game-playground-container" style="display:none;">
+          <div style="position:absolute; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center;">
+            <button class="btn btn-secondary" id="game-back-btn" style="padding: 6px 12px; font-size: 0.8rem;"><i class="fas fa-chevron-left"></i> Back</button>
+            <h2 id="game-title-header" style="font-size: 1.25rem; font-weight:800;">Game Title</h2>
+            <div style="display:flex; gap:16px; font-weight:700; font-size:0.9rem;">
+              <span id="game-stat-level">Level: 1</span>
+              <span id="game-stat-score" style="color:var(--accent);">Score: 0</span>
+            </div>
+          </div>
+
+          <div id="game-interactive-area" style="width:100%; max-width:600px; display:flex; flex-direction:column; align-items:center; margin-top:40px;">
+            <!-- Target game interactive elements loaded by games.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 9: AI TEACHER TUTOR VIEW
+           ========================================================================== -->
+      <section class="app-section" id="ai-teacher-section">
+        <div class="speaking-workspace">
+          <!-- Chat Window -->
+          <div class="glass-panel tutor-bubble-chat" style="padding:20px;">
+            <div class="chat-header">
+              <div class="bot-avatar" style="background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);"><i class="fas fa-graduation-cap"></i></div>
+              <div>
+                <h4 style="font-weight:700; font-size:0.95rem;">Tutor Mini</h4>
+                <span style="font-size:0.75rem; color:var(--secondary);">Study Assistant</span>
+              </div>
+            </div>
+            
+            <div class="chat-history" id="teacher-chat-history">
+              <!-- Tutor bubbles -->
+            </div>
+
+            <div class="chat-input-area">
+              <textarea id="teacher-input" class="form-input" style="height:50px; resize:none; flex:1;" placeholder="Ask grammar help (e.g. Explain Past Simple, translate hello)..."></textarea>
+              <button class="voice-mic-btn" id="teacher-send-btn" style="width:50px; height:50px; border-radius:50%;"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+
+          <!-- Configuration and help Panel -->
+          <div class="glass-panel" style="display:flex; flex-direction:column; gap:20px;">
+            <h3 style="font-weight:700;">Tutor Settings</h3>
+            
+            <div class="glass-card" style="padding:16px;">
+              <h4 style="font-weight:700; font-size:0.9rem; margin-bottom:8px; color:var(--primary);">Dynamic Gemini AI API</h4>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px; line-height:1.4;">
+                Add a free Google Gemini API key to make this assistant answer advanced English questions with accurate explanation details and custom quiz generation.
+              </p>
+              <input type="password" placeholder="Paste Gemini API Key here..." id="gemini-api-key-input" class="form-input" style="margin-bottom:10px;">
+              <button class="btn btn-primary" id="save-gemini-key-btn" style="padding:8px 16px; font-size:0.85rem;">Save Settings</button>
+            </div>
+
+            <div class="glass-card" style="padding:16px;">
+              <h4 style="font-weight:700; font-size:0.9rem; margin-bottom:6px;">Sample Questions</h4>
+              <ul style="list-style-type:none; display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:var(--text-secondary);">
+                <li>💡 "Explain the difference between Present Simple and Continuous."</li>
+                <li>💡 "What is the meaning of the phrasal verb 'give up'?"</li>
+                <li>💡 "Translate this sentence to Malayalam: 'Knowledge is power.'"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 10: SEARCH RESULTS VIEW
+           ========================================================================== -->
+      <section class="app-section" id="search-results-section">
+        <div class="glass-panel">
+          <h2 style="font-weight: 800; margin-bottom: 20px;">Search Results</h2>
+          <div id="search-results-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:20px;">
+            <!-- Matches output -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 11: ADMIN PANEL VIEW
+           ========================================================================== -->
+      <section class="app-section" id="admin-section">
+        <div class="admin-grid">
+          <!-- Left Admin selection panel -->
+          <div class="glass-panel" style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+            <h3 style="font-weight:700; margin-bottom:12px;">Data Management</h3>
+            <div class="admin-tab active" data-tab="vocab"><i class="fas fa-spell-check"></i> Vocabulary Database</div>
+            <div class="admin-tab" data-tab="lessons"><i class="fas fa-book"></i> Grammar Course Database</div>
+          </div>
+
+          <!-- Right Admin Table / Form panel -->
+          <div class="glass-panel" style="display:flex; flex-direction:column; gap:24px;">
+            <h3 style="font-weight:700;">Database Console</h3>
+
+            <!-- Data entry form (Vocabulary) -->
+            <div id="admin-vocab-form-panel">
+              <h4 style="font-weight:700; font-size:0.95rem; margin-bottom:12px; color:var(--primary);">Add Vocabulary Word</h4>
+              <form id="admin-vocab-form" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <input type="text" placeholder="Word Name (e.g. Purchase)" id="admin-vocab-word" class="form-input">
+                <input type="text" placeholder="Malayalam Meaning" id="admin-vocab-meaning" class="form-input malayalam-font">
+                <select id="admin-vocab-category" class="form-input">
+                  <option value="Daily conversation">Daily conversation</option>
+                  <option value="Office">Office</option>
+                  <option value="Hospital">Hospital</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Shopping">Shopping</option>
+                </select>
+                <input type="text" placeholder="Example sentence" id="admin-vocab-sentence" class="form-input">
+                <button type="submit" class="btn btn-primary" style="grid-column: 1/-1; justify-self: flex-start;">Add Vocabulary Entry</button>
+              </form>
+            </div>
+
+            <!-- Data entry form (Lessons) -->
+            <div id="admin-lesson-form-panel" style="display:none;">
+              <h4 style="font-weight:700; font-size:0.95rem; margin-bottom:12px; color:var(--primary);">Add Grammar Lesson</h4>
+              <form id="admin-lesson-form" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                  <input type="text" placeholder="Lesson Title" id="admin-lesson-title" class="form-input">
+                  <select id="admin-lesson-category" class="form-input">
+                    <option value="parts_of_speech">Parts of Speech</option>
+                    <option value="tenses">Tenses</option>
+                    <option value="voice">Active & Passive Voice</option>
+                  </select>
+                </div>
+                <textarea placeholder="English explanation content..." id="admin-lesson-desc-eng" class="form-input" style="height:80px;"></textarea>
+                <textarea placeholder="Malayalam explanation content..." id="admin-lesson-desc-mal" class="form-input malayalam-font" style="height:80px;"></textarea>
+                <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Add Lesson Chapter</button>
+              </form>
+            </div>
+
+            <!-- Table of existing items -->
+            <div style="border-top:1px solid var(--surface-border); padding-top:20px;">
+              <h4 style="font-weight:700; margin-bottom:12px;">Active Database Entities</h4>
+              <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse;" id="admin-data-table">
+                  <thead id="admin-data-table-header">
+                    <!-- Dynamic Headers -->
+                  </thead>
+                  <tbody id="admin-data-table-body">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Boot module app runner -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

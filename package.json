@@ -1,0 +1,27 @@
+{
+  "name": "english-malayalam-learning-hub",
+  "version": "1.0.0",
+  "description": "An all-in-one platform for Malayalam speakers to learn English, featuring translation, grammar, games, speaking practice, and PWA capabilities.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y http-server -p 8080",
+    "cap:init": "npx cap init \"English Malayalam Learning Hub\" \"com.learnenglish.malayalamhub\" --web-dir=.",
+    "cap:add": "npx cap add android",
+    "cap:sync": "npx cap sync"
+  },
+  "keywords": [
+    "english",
+    "malayalam",
+    "learning",
+    "pwa",
+    "android",
+    "capacitor"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/cli": "^5.0.0",
+    "@capacitor/core": "^5.0.0"
+  }
+}
